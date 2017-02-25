@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ivrjacku1.*;
+import IvrJackU1.*;
 
 public class UHFReader extends CordovaPlugin {
 
