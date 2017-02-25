@@ -1,5 +1,6 @@
 package com.keepsake.cordova.plugin;
 
+import org.apache.cordova.*;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
@@ -7,26 +8,47 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
-* This class echoes a string called from JavaScript.
-*/
+import ivrjacku1.rfid.ivrjacku1.IvrJackService;
+
 public class UHFReader extends CordovaPlugin {
+
+	// CordovaInterface mCordova; 
+
+	// @Override 
+	// public void initialize(CordovaInterface cordova, CordovaWebView webView) { 
+	// 	super.initialize(cordova, webView); 
+	// 	mCordova = cordova; 
+	// }
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if (action.equals("read")) {
-			String message = args.getString(0);
-			this.readTags(message, callbackContext);
+			this.readTags(args, callbackContext);
+			return true;
+		} else if (action.equals("write")) {
+			this.writeTags(args, callbackContext);
 			return true;
 		}
 		return false;
 	}
 
-	private void readTags(String message, CallbackContext callbackContext) {
-		if (message != null && message.length() > 0) {
+	private void readTags(JSONArray args, CallbackContext callbackContext) {
+		try{
+			IvrJackService.readEPC();
+		} catch(e) {
+			if (args) {
+				callbackContext.success(args);
+			} else {
+				callbackContext.error(e);
+			}
+		}		
+	}
+
+	private void writeTags(JSONArray args, CallbackContext callbackContext) {
+		if (args) {
 			callbackContext.success(message);
 		} else {
-			callbackContext.error("Expected one non-empty string argument.");
+			callbackContext.error("Write tags error.");
 		}
 	}
 }
