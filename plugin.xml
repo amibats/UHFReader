@@ -20,6 +20,13 @@
 
     <!-- android -->
     <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.keepsake.cordova.plugin.UHFReader"
+                      android:label="@string/app_name">
+                <intent-filter></intent-filter>
+            </activity>
+        </config-file>
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="UHFReader">
                 <param name="android-package" value="com.keepsake.cordova.plugin.UHFReader"/>
@@ -28,21 +35,6 @@
 
         <asset src="www/uhfreader.js" target="uhfreader.js" />
         <source-file src="src/android/libs/IvrJackU1.jar" target-dir="libs" />
-        <source-file src="UHFReader.java" target-dir="src/android/src/com/keepsake/cordova/plugin" />      
-     </platform>         
-
-    <!-- <platform name="android">
-        <js-module src="www/uhfreader.js" name="UHFReader">
-            <runs />
-        </js-module>
-
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="UHFReader">
-                <param name="android-package" value="com.keepsake.plugin"/>
-            </feature>
-        </config-file>
-
-        <source-file src="src/android/UHFReader.java" target-dir="src/com/keepsake/plugin" />      
-
-    </platform> -->     
+        <source-file src="src/android/src/com/keepsake/cordova/plugin/UHFReader.java" target-dir="src/com/keepsake/cordova/plugin" />      
+     </platform>          
 </plugin>
