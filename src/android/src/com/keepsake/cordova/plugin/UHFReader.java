@@ -73,6 +73,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		this.andContext = this.cordova.getActivity().getApplicationContext(); 
 		IvrJackService ivrjacku1 = new IvrJackService();
 		ivrjacku1.open(andContext, this);
