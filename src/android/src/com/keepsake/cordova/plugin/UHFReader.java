@@ -36,6 +36,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 //		IvrJackService.readEPC();
 		try{
 			IvrJackService ivrjacku1=new IvrJackService();
+			ivrjacku1.open(this, this);
 			int readRes=ivrjacku1.readEPC(true);
 			System.out.println("Read result: "+readRes);
 		}
@@ -48,18 +49,34 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	}
 
+	@Override
 	public void onConnect(String var1){
 		System.out.println("onConnect");
 	}
 
+	@Override
     public void onDisconnect(){
     	System.out.println("onDisConnect");
     }
 
+    @Override
     public void onStatusChange(IvrJackStatus var1){
-    	System.out.println("onStatusChange");
+    	switch (var1) {
+			case ijsDetecting: 
+				System.out.println("Is ijsDetecting");
+				break;
+				
+			case ijsRecognized:
+				System.out.println("Is ijsRecognized");
+				break;
+				
+			case ijsUnRecognized:
+				System.out.println("ijsUnRecognized");
+				break;
+		}
     }
 
+    @Override
     public void onInventory(String var1){
     	System.out.println("onInventory");
     }
