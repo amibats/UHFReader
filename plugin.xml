@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+           id="com.keepsake.cordova.plugin.UHFReader"
+      version="0.1.0">
+
+    <name>UHFReader</name>
+    <description>UHFReader PhoneGap Plugin</description>
+    <license>MIT</license>
+    <keywords>phonegap,rfid,UHFReader</keywords>
+
+    <engines>
+      <engine name="cordova" version=">=3.0.0" />
+    </engines>    
+
+    <js-module src="www/uhfreader.js" name="UHFReader">
+        <clobbers target="window.uhfreader" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="UHFReader">
+                <param name="android-package" value="com.keepsake.cordova.plugin.UHFReader"/>
+            </feature>
+        </config-file>
+
+        <asset src="www/uhfreader.js" target="uhfreader.js" />
+        <source-file src="src/android/libs/IvrJackU1.jar" target-dir="libs" />
+        <source-file src="UHFReader.java" target-dir="src/android/src/com/keepsake/cordova/plugin" />      
+     </platform>         
+
+    <!-- <platform name="android">
+        <js-module src="www/uhfreader.js" name="UHFReader">
+            <runs />
+        </js-module>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="UHFReader">
+                <param name="android-package" value="com.keepsake.plugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/UHFReader.java" target-dir="src/com/keepsake/plugin" />      
+
+    </platform> -->     
+</plugin>
