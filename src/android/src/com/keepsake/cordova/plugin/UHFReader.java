@@ -45,4 +45,8 @@ public class UHFReader extends CordovaPlugin {
 			}
 		}*/
 	}
+
+	private void writeTags(JSONArray args, CallbackContext callbackContext) {
+
+	}
 }
