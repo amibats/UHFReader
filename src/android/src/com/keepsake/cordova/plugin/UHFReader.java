@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import rfid.ivrjacku1.*;
 
-public class UHFReader extends CordovaPlugin {
+public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	// CordovaInterface mCordova; 
 
@@ -42,18 +42,25 @@ public class UHFReader extends CordovaPlugin {
 		catch(Exception ex){
 			ex.printStackTrace();
 		}
-		/*try {
-			IvrJackService.readEPC();
-		} catch(Exception e) {
-			if (args) {
-				callbackContext.success(args);
-			} else {
-				callbackContext.error(e);
-			}
-		}*/
 	}
 
 	private void writeTags(JSONArray args, CallbackContext callbackContext) {
 
 	}
+
+	public void onConnect(String var1){
+		System.out.println("onConnect");
+	}
+
+    public void onDisconnect(){
+    	System.out.println("onDisConnect");
+    }
+
+    public void onStatusChange(IvrJackStatus var1){
+    	System.out.println("onStatusChange");
+    }
+
+    public void onInventory(String var1){
+    	System.out.println("onInventory");
+    }
 }
