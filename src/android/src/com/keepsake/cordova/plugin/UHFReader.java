@@ -13,6 +13,7 @@ import rfid.ivrjacku1.*;
 
 public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
+	private Context andContext;
 	// CordovaInterface mCordova; 
 
 	// @Override 
@@ -35,12 +36,12 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private void readTags(JSONArray args, CallbackContext callbackContext) {
 		try{
-			Context context=this.cordova.getActivity().getApplicationContext(); 
+			this.andContext = this.cordova.getActivity().getApplicationContext(); 
 			IvrJackService ivrjacku1 = new IvrJackService();
 			ivrjacku1.open(context, this);
 			System.out.println("APPMSG - Open result Success");
 			int readRes = ivrjacku1.readEPC(true);
-			System.out.println("APPMSG - Read result: "+readRes);
+			System.out.println("APPMSG - Read result: " + readRes);
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
