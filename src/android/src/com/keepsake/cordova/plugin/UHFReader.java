@@ -9,6 +9,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast; 
+
 import rfid.ivrjacku1.*;
 
 public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
@@ -35,12 +52,12 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	}
 
 	private void readTags(JSONArray args, CallbackContext callbackContext) {
-		try{
-			this.andContext = this.cordova.getActivity().getApplicationContext(); 
-			
+		try {
 			IvrJackService ivrjacku1 = new IvrJackService();
-			ivrjacku1.open(andContext, this);
-			System.out.println("APPMSG111 - Open result Success");
+
+			// this.andContext = this.cordova.getActivity().getApplicationContext(); 
+			// ivrjacku1.open(andContext, this);
+			// System.out.println("APPMSG111 - Open result Success");
 			
 			int readRes = ivrjacku1.readEPC(true);
 			System.out.println("APPMSG111 - Read result: " + readRes);
@@ -52,6 +69,14 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private void writeTags(JSONArray args, CallbackContext callbackContext) {
 
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		this.andContext = this.cordova.getActivity().getApplicationContext(); 
+		IvrJackService ivrjacku1 = new IvrJackService();
+		ivrjacku1.open(andContext, this);
+		System.out.println("APPMSG111 - Open result Success");
 	}
 
 	@Override
@@ -70,14 +95,12 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 			case ijsDetecting: 
 				System.out.println("APPMSG - Is ijsDetecting");
 
-				this.andContext = this.cordova.getActivity().getApplicationContext(); 
-			
-				IvrJackService ivrjacku1 = new IvrJackService();
-				ivrjacku1.open(andContext, this);
-				System.out.println("APPMSG - Open result Success");
-				
-				int readRes = ivrjacku1.readEPC(true);
-				System.out.println("APPMSG - Read result: " + readRes);
+				// this.andContext = this.cordova.getActivity().getApplicationContext(); 
+				// IvrJackService ivrjacku1 = new IvrJackService();
+				// ivrjacku1.open(andContext, this);
+				// System.out.println("APPMSG - Open result Success");
+				// int readRes = ivrjacku1.readEPC(true);
+				// System.out.println("APPMSG - Read result: " + readRes);
 
 				break;
 				
