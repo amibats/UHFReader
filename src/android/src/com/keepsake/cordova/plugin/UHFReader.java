@@ -33,22 +33,16 @@ public class UHFReader extends CordovaPlugin {
 	}
 
 	private void readTags(JSONArray args, CallbackContext callbackContext) {
-		// try {
-			IvrJackService.readEPC();
-		// } catch(Exception e) {
-			// if (args) {
-			// 	callbackContext.success(args);
-			// } else {
-				// callbackContext.error(e);
-			// }
-		}		
-	}
+		IvrJackService.readEPC();
 
-	private void writeTags(JSONArray args, CallbackContext callbackContext) {
-		if (args) {
-			callbackContext.success(message);
-		} else {
-			callbackContext.error("Write tags error.");
-		}
+		/*try {
+			IvrJackService.readEPC();
+		} catch(Exception e) {
+			if (args) {
+				callbackContext.success(args);
+			} else {
+				callbackContext.error(e);
+			}
+		}*/
 	}
 }
