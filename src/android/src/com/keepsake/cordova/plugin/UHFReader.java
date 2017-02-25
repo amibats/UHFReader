@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ivrjacku1.rfid.ivrjacku1.IvrJackService;
+import ivrjacku1.rfid.ivrjacku1.*;
 
 public class UHFReader extends CordovaPlugin {
 
@@ -33,8 +33,14 @@ public class UHFReader extends CordovaPlugin {
 	}
 
 	private void readTags(JSONArray args, CallbackContext callbackContext) {
-		IvrJackService.readEPC();
-
+//		IvrJackService.readEPC();
+		try{
+			IvrJackService ivrjacku1=new IvrJackService();
+			ivrjacku1.readEPC();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
 		/*try {
 			IvrJackService.readEPC();
 		} catch(Exception e) {
