@@ -27,7 +27,7 @@
         </config-file>
 
         <asset src="www/uhfreader.js" target="uhfreader.js" />
-        <!-- <source-file src="src/android/libs/IvrJackU1.jar" target-dir="libs" /> -->
+        <source-file src="src/android/libs/IvrJackU1.jar" target-dir="libs" />
         <source-file src="src/android/src/com/keepsake/cordova/plugin/UHFReader.java" target-dir="src/com/keepsake/cordova/plugin/" />      
      </platform>          
 </plugin>
