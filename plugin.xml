@@ -20,12 +20,12 @@
 
     <!-- android -->
     <platform name="android">
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <!--<config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:name="com.keepsake.cordova.plugin.UHFReader"
                       android:label="@string/app_name">
                 <intent-filter></intent-filter>
             </activity>
-        </config-file>
+        </config-file>-->
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="UHFReader">
