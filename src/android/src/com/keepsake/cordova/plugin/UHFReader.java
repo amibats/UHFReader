@@ -44,10 +44,10 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		System.out.println("APPMSG - Execute");
 		System.out.println("APPMSG\t ARGS JSON - "+args.toString());
-		this.andContext = this.cordova.getActivity().getApplicationContext(); 
-		//IvrJackService ivrjacku1 = new IvrJackService();
-		getIvrJackService().open(andContext, this);
-		System.out.println("APPMSG - Open result Success");
+		// this.andContext = this.cordova.getActivity().getApplicationContext(); 
+		// //IvrJackService ivrjacku1 = new IvrJackService();
+		// getIvrJackService().open(andContext, this);
+		// System.out.println("APPMSG - Open result Success");
 
 		if (action.equals("read")) {
 			System.out.println("APPMSG - Read in Execute");
@@ -62,7 +62,9 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	}
 
 	private void readTags(JSONArray args, CallbackContext callbackContext) {
-
+		System.out.println("APPMSG - Read Status Change");
+					int res=getIvrJackService().readEPC(true);
+					System.out.println("APPMSG - Read: "+res);
 		// try {
 		// 	IvrJackService ivrjacku1 = new IvrJackService();
 
@@ -112,10 +114,11 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 				break;
 				
 			case ijsRecognized:
-				System.out.println("APPMSG - IsRecognized");
-					System.out.println("APPMSG - Read Status Change");
-				int res=getIvrJackService().readEPC(true);
-				System.out.println("APPMSG - Read: "+res);
+					System.out.println("APPMSG - IsRecognized");
+					this.andContext = this.cordova.getActivity().getApplicationContext(); 
+			//IvrJackService ivrjacku1 = new IvrJackService();
+		getIvrJackService().open(andContext, this);
+		System.out.println("APPMSG - Open result Success");
 				break;
 				
 			case ijsUnRecognized:
