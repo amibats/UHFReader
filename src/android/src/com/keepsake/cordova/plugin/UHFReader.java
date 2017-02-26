@@ -44,16 +44,17 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		System.out.println("APPMSG - Execute");
 		System.out.println("APPMSG ARGS JSON - "+args.toString());
-		this.andContext = this.cordova.getActivity().getApplicationContext(); 
-		//IvrJackService ivrjacku1 = new IvrJackService();
-		getIvrJackService().open(andContext, this);
-		System.out.println("APPMSG - Open result Success");
+		// this.andContext = this.cordova.getActivity().getApplicationContext(); 
+		// //IvrJackService ivrjacku1 = new IvrJackService();
+		// getIvrJackService().open(andContext, this);
+		// System.out.println("APPMSG - Open result Success");
 
 		if (action.equals("read")) {
 			System.out.println("APPMSG - Read in Execute");
-			this.readTags(args, callbackContext);
+//			this.readTags(args, callbackContext);
 			return true;
 		} else if (action.equals("write")) {
+			System.out.println("APPMSG - Write in Execute");
 			this.writeTags(args, callbackContext);
 			return true;
 		}
@@ -63,9 +64,10 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private void readTags(JSONArray args, CallbackContext callbackContext) {
 		System.out.println("APPMSG - Read Status Change");
-					int res=getIvrJackService().readEPC(true);
-					System.out.println("APPMSG - Read: "+res);
-					System.out.println("APPMSG ARGS JSON Read- "+args.toString());
+
+					// int res=getIvrJackService().readEPC(true);
+					// System.out.println("APPMSG - Read: "+res);
+					// System.out.println("APPMSG ARGS JSON Read- "+args.toString());
 					
 		// try {
 		// 	IvrJackService ivrjacku1 = new IvrJackService();
@@ -113,17 +115,19 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
     	switch (var1) {
 			case ijsDetecting: 
 				System.out.println("APPMSG - Is ijsDetecting");
+				this.andContext = this.cordova.getActivity().getApplicationContext(); 
+		//IvrJackService ivrjacku1 = new IvrJackService();
+		getIvrJackService().open(andContext, this);
+		System.out.println("APPMSG - Open result Success");
 				break;
 				
 			case ijsRecognized:
 					System.out.println("APPMSG - IsRecognized");
-					
+					int res=getIvrJackService().readEPC(true);
+					System.out.println("APPMSG - Read: "+res);
+					//System.out.println("APPMSG ARGS JSON Read- "+args.toString());
 					//this.readTags(args, callbackContext);
-		// 			this.andContext = this.cordova.getActivity().getApplicationContext(); 
-		// 	//IvrJackService ivrjacku1 = new IvrJackService();
-		// getIvrJackService().open(andContext, this);
-		// System.out.println("APPMSG - Open result Success");
-				break;
+					break;
 				
 			case ijsUnRecognized:
 				System.out.println("APPMSG - ijsUnRecognized");
