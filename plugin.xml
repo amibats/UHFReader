@@ -20,9 +20,9 @@
 
 	<!-- android -->
 	<platform name="android">
-		<config-file target="AndroidManifest.xml" parent="/manifest">
+		<!-- <config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.RECORD_AUDIO" />
-		</config-file>
+		</config-file> -->
 
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="UHFReader">
