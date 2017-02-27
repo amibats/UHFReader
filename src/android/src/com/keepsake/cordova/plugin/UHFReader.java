@@ -1,8 +1,6 @@
 package com.keepsake.cordova.plugin;
 
 import org.apache.cordova.*;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +31,8 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	private Context andContext;
 	private IvrJackService ivrjacku1;
 
+	String [] permissions = { Manifest.permission.RECORD_AUDIO };
+
 	private IvrJackService getIvrJackService(){
 		if(ivrjacku1 == null)
 			ivrjacku1 = new IvrJackService();
@@ -49,27 +49,32 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		if (action.equals("read")) {
 			System.out.println("APPMSG - Read in Execute");
 
-			System.out.println("APPMSG - IsRecognized");
-			int res = getIvrJackService().readEPC(false);
-			System.out.println("APPMSG - Read: " + res);
-					
+			if (hasPermisssion()) {
+                PluginResult r = new PluginResult(PluginResult.Status.OK);
+                callbackContext.sendPluginResult(r);
+                return true;
+            } else {
+                PermissionHelper.requestPermissions(this, 0, permissions);
+            }
+            return true;
+
 			// this.readTags(args, callbackContext);
-			return true;
-		} else if (action.equals("write")) {
-			System.out.println("APPMSG - Write in Execute");
-			// this.writeTags(args, callbackContext);
-			return true;
 		}
 
 		return false;
 	}
 
+	public boolean hasPermisssion() {
+        for (String p : permissions) {
+            if (!PermissionHelper.hasPermission(this, p)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 	private void readTags(JSONArray args, CallbackContext callbackContext) {
 		System.out.println("APPMSG - Read Status Change");
-	}
-
-	private void writeTags(JSONArray args, CallbackContext callbackContext) {
-
 	}
 
     @Override
@@ -80,9 +85,9 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 				break;
 				
 			case ijsRecognized:
-					// System.out.println("APPMSG - IsRecognized");
-					// int res = getIvrJackService().readEPC(false);
-					// System.out.println("APPMSG - Read: " + res);
+					System.out.println("APPMSG - IsRecognized");
+					int res = getIvrJackService().readEPC(false);
+					System.out.println("APPMSG - Read: " + res);
 					break;
 				
 			case ijsUnRecognized:
@@ -101,7 +106,6 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
     	System.out.println("APPMSG - onDisConnect");
     }
 
-    @Override
     public void onInventory(String var1){
     	System.out.println("APPMSG - onInventory");
     }
