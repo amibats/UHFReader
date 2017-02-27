@@ -28,52 +28,11 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		if (hasPermisssion()) {
 			PluginResult r = new PluginResult(PluginResult.Status.OK);
 			callbackContext.sendPluginResult(r);
+			return true;
 		} else {
 			PermissionHelper.requestPermissions(this, 0, permissions);
 		}
 	}
-
-	private IvrJackService getIvrJackService(){
-		if(ivrjacku1 == null)
-			ivrjacku1 = new IvrJackService();
-		return ivrjacku1;
-	}
-
-	@Override
-	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		this.callbackContext = callbackContext;
-		this.andContext = this.cordova.getActivity().getApplicationContext(); 
-
-		System.out.println("APPMSG - Execute");
-		
-		getIvrJackService().open(andContext, this);
-
-		if (action.equals("read")) {
-			System.out.println("APPMSG - Read in Execute");
-			this.readTags();
-		} else {
-			return false;
-		}
-
-		return true;
-	}
-
-	public void readTags() {
-		System.out.println("APPMSG - Read Status Change");
-        Intent intentRead = new Intent();
-        intentRead.setAction(READ_INTENT);
-        this.cordova.startActivityForResult(this, intentRead, READ_CODE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    	switch(requestCode) {
-       		case READ_CODE :
-       			System.out.println("APPMSG - onActivityResult : " + resultCode);
-
-	            break;
-	    }
-    }
 
 	public boolean hasPermisssion() {
 		for (String p : permissions) {
@@ -83,6 +42,47 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		}
 		return true;
 	}
+
+	private IvrJackService getIvrJackService() {
+		if (ivrjacku1 == null) {
+			ivrjacku1 = new IvrJackService();
+		}
+		return ivrjacku1;
+	}
+
+	@Override
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		this.callbackContext = callbackContext;
+		this.andContext = this.cordova.getActivity().getApplicationContext(); 
+
+		System.out.println("APPMSG - Execute");
+
+		if (action.equals("read")) {
+			getIvrJackService().open(andContext, this);
+			System.out.println("APPMSG - Read in Execute");
+			this.readTags();
+			return true;
+		} 
+
+		return false;
+	}
+
+	public void readTags() {
+		System.out.println("APPMSG - Read Status Change");
+        // Intent intentRead = new Intent();
+        // intentRead.setAction(READ_INTENT);
+        // this.cordova.startActivityForResult(this, intentRead, READ_CODE);
+    }
+
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    	switch(requestCode) {
+       		case READ_CODE :
+       			System.out.println("APPMSG - onActivityResult : " + resultCode);
+
+	            break;
+	    }
+    }*/	
 
 	@Override
 	public void onStatusChange(IvrJackStatus var1) {
