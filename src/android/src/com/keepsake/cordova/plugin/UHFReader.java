@@ -17,6 +17,17 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	String [] permissions = { Manifest.permission.RECORD_AUDIO };
 
+	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		super.initialize(cordova, webView);
+		if (hasPermisssion()) {
+			PluginResult r = new PluginResult(PluginResult.Status.OK);
+			callbackContext.sendPluginResult(r);
+			return true;
+		} else {
+			PermissionHelper.requestPermissions(this, 0, permissions);
+		}
+	}
+
 	private IvrJackService getIvrJackService(){
 		if(ivrjacku1 == null)
 			ivrjacku1 = new IvrJackService();
@@ -32,38 +43,79 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 		if (action.equals("read")) {
 			System.out.println("APPMSG - Read in Execute");
-
-			if (hasPermisssion()) {
-                PluginResult r = new PluginResult(PluginResult.Status.OK);
-                callbackContext.sendPluginResult(r);
-                return true;
-            } else {
-                PermissionHelper.requestPermissions(this, 0, permissions);
-            }
-            return true;
-
-			// this.readTags(args, callbackContext);
+			this.readTags();
 		}
 
 		return false;
 	}
 
-	public boolean hasPermisssion() {
-        for (String p : permissions) {
-            if (!PermissionHelper.hasPermission(this, p)) {
-                return false;
-            }
-        }
-        return true;
+	public void readTags() {
+		System.out.println("APPMSG - Read Status Change");
+        Intent intentRead = new Intent();
+        intentRead.setAction(READ_INTENT);
+        this.cordova.startActivityForResult(this, intentRead, READ_CODE);
     }
 
-	private void readTags(JSONArray args, CallbackContext callbackContext) {
-		System.out.println("APPMSG - Read Status Change");
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    	switch(requestCode) {
+       		case READ_CODE :
+       			System.out.println("APPMSG - onActivityResult : " + resultCode);
+
+	            if (resultCode == Activity.RESULT_OK) {
+	                JSONObject obj = new JSONObject();
+	                try {
+	                    ArrayList<String> result = intent.getStringArrayListExtra("RESULT");
+	                    JSONArray jsArray = new JSONArray(result);
+	                    obj.put(CANCELLED, false);
+	                    obj.put("tags", jsArray);
+	                } catch (JSONException e) {
+	                    Log.d(LOG_TAG, "This should never happen");
+	                }
+
+	                this.callbackContext.success(obj);
+	            } else if (resultCode == Activity.RESULT_CANCELED) {
+	                JSONObject obj = new JSONObject();
+	                try {
+	                    obj.put(CANCELLED, true);
+	                    obj.put("tags", "");
+	                } catch (JSONException e) {
+	                    Log.d(LOG_TAG, "This should never happen");
+	                }
+	                this.callbackContext.success(obj);
+	            } else {
+	                this.callbackContext.error("Unexpected error");
+	            }
+	            break;
+		    /*case RADAR_CODE :
+		    	if (resultCode == Activity.RESULT_CANCELED) {
+	                JSONObject obj = new JSONObject();
+	                try {
+	                    obj.put(CANCELLED, true);
+	                    obj.put("tags", "");
+	                } catch (JSONException e) {
+	                    Log.d(LOG_TAG, "This should never happen");
+	                }
+	                this.callbackContext.success(obj);
+	            } else {
+	                this.callbackContext.error("Unexpected error");
+	            }
+	            break;*/
+	    }
+    }
+
+	public boolean hasPermisssion() {
+		for (String p : permissions) {
+			if (!PermissionHelper.hasPermission(this, p)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
-    @Override
-    public void onStatusChange(IvrJackStatus var1) {
-    	switch (var1) {
+	@Override
+	public void onStatusChange(IvrJackStatus var1) {
+		switch (var1) {
 			case ijsDetecting: 
 				System.out.println("APPMSG - Is ijsDetecting");				
 				break;
@@ -78,19 +130,19 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 				System.out.println("APPMSG - ijsUnRecognized");
 				break;
 		}
-    }
+	}
 
-    @Override
+	@Override
 	public void onConnect(String var1) {
 		System.out.println("APPMSG - onConnect");
 	}
 
 	@Override
-    public void onDisconnect(){
-    	System.out.println("APPMSG - onDisConnect");
-    }
+	public void onDisconnect(){
+		System.out.println("APPMSG - onDisConnect");
+	}
 
-    public void onInventory(String var1){
-    	System.out.println("APPMSG - onInventory");
-    }
+	public void onInventory(String var1){
+		System.out.println("APPMSG - onInventory");
+	}
 }
