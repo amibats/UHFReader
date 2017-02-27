@@ -31,7 +31,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		} else {
 			PermissionHelper.requestPermissions(this, 0, permissions);
 		}
-		return true;
+		// return true;
 	}
 
 	public boolean hasPermisssion() {
