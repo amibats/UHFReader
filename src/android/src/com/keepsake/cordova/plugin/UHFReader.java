@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import android.*;
+import android.content.Intent;
 import rfid.ivrjacku1.*;
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		if (hasPermisssion()) {
 			PluginResult r = new PluginResult(PluginResult.Status.OK);
 			callbackContext.sendPluginResult(r);
-			return true;
+			// return true;
 		} else {
 			PermissionHelper.requestPermissions(this, 0, permissions);
 		}
@@ -68,7 +69,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
        		case READ_CODE :
        			System.out.println("APPMSG - onActivityResult : " + resultCode);
 
-	            if (resultCode == this.andContext.RESULT_OK) {
+	            /*if (resultCode == this.andContext.RESULT_OK) {
 	                JSONObject obj = new JSONObject();
 	                try {
 	                    ArrayList<String> result = intent.getStringArrayListExtra("RESULT");
@@ -91,7 +92,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	                this.callbackContext.success(obj);
 	            } else {
 	                this.callbackContext.error("Unexpected error");
-	            }
+	            }*/
 	            break;
 		    /*case RADAR_CODE :
 		    	if (resultCode == Activity.RESULT_CANCELED) {
