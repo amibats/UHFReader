@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import android.*;
-import android.content.Intent;
+// import android.content.Intent;
 import rfid.ivrjacku1.*;
 import java.util.*;
 
@@ -16,9 +16,9 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private Context andContext;
 	private IvrJackService ivrjacku1;
-	private CallbackContext callbackContext;
-	private static final String READ_INTENT = "keepsake.intent.action.READ";
-	public static final int READ_CODE = 0;
+	// private CallbackContext callbackContext;
+	// private static final String READ_INTENT = "keepsake.intent.action.READ";
+	// public static final int READ_CODE = 0;
 
 	String [] permissions = { Manifest.permission.RECORD_AUDIO };
 
@@ -28,10 +28,10 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		if (hasPermisssion()) {
 			PluginResult r = new PluginResult(PluginResult.Status.OK);
 			callbackContext.sendPluginResult(r);
-			// return true;
 		} else {
 			PermissionHelper.requestPermissions(this, 0, permissions);
 		}
+		return true;
 	}
 
 	public boolean hasPermisssion() {
@@ -52,13 +52,13 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		this.callbackContext = callbackContext;
+		// this.callbackContext = callbackContext;
 		this.andContext = this.cordova.getActivity().getApplicationContext(); 
+		getIvrJackService().open(andContext, this);
 
 		System.out.println("APPMSG - Execute");
 
 		if (action.equals("read")) {
-			getIvrJackService().open(andContext, this);
 			System.out.println("APPMSG - Read in Execute");
 			this.readTags();
 			return true;
