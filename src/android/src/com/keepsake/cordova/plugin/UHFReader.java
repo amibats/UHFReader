@@ -14,6 +14,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private Context andContext;
 	private IvrJackService ivrjacku1;
+	private CallbackContext callbackContext;
 
 	String [] permissions = { Manifest.permission.RECORD_AUDIO };
 
@@ -36,6 +37,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		this.callbackContext = callbackContext;
 		
 		System.out.println("APPMSG - Execute");
 		this.andContext = this.cordova.getActivity().getApplicationContext(); 
@@ -67,20 +69,20 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	                try {
 	                    ArrayList<String> result = intent.getStringArrayListExtra("RESULT");
 	                    JSONArray jsArray = new JSONArray(result);
-	                    obj.put(CANCELLED, false);
+	                    // obj.put(CANCELLED, false);
 	                    obj.put("tags", jsArray);
 	                } catch (JSONException e) {
-	                    Log.d(LOG_TAG, "This should never happen");
+	                    // Log.d(LOG_TAG, "This should never happen");
 	                }
 
 	                this.callbackContext.success(obj);
 	            } else if (resultCode == Activity.RESULT_CANCELED) {
 	                JSONObject obj = new JSONObject();
 	                try {
-	                    obj.put(CANCELLED, true);
+	                    // obj.put(CANCELLED, true);
 	                    obj.put("tags", "");
 	                } catch (JSONException e) {
-	                    Log.d(LOG_TAG, "This should never happen");
+	                    // Log.d(LOG_TAG, "This should never happen");
 	                }
 	                this.callbackContext.success(obj);
 	            } else {
