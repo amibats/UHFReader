@@ -91,7 +91,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 								int res = getIvrJackService().readEPC(true);
 								System.out.println("APPMSG - Read: " + res);
 							}
-						}, 7000);
+						}, 5000);
 
 					// int res = getIvrJackService().readEPC(true);
 					// System.out.println("2 APPMSG - Read: " + res);
