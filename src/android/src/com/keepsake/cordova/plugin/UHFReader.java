@@ -26,8 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast; 
 
-import java.util.*;
-
 import rfid.ivrjacku1.*;
 
 public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
@@ -49,9 +47,9 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		getIvrJackService().open(andContext, this);
 
 		if (action.equals("read")) {
-			// System.out.println("APPMSG - Read in Execute");
-			// this.readTags(args, callbackContext);
-			// return true;
+			System.out.println("APPMSG - Read in Execute");
+			this.readTags(args, callbackContext);
+			return true;
 		} else if (action.equals("write")) {
 			System.out.println("APPMSG - Write in Execute");
 			this.writeTags(args, callbackContext);
