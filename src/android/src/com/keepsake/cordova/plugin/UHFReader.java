@@ -17,17 +17,17 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	private Context andContext;
 	private IvrJackService ivrjacku1;
 	private CallbackContext callbackContext;
-	private static final String READ_INTENT = "keepsake.intent.action.UHF_READ";
+	private static final String READ_INTENT = "keepsake.intent.action.READ";
 	public static final int READ_CODE = 0;
 
 	String [] permissions = { Manifest.permission.RECORD_AUDIO };
 
+	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		if (hasPermisssion()) {
 			PluginResult r = new PluginResult(PluginResult.Status.OK);
 			callbackContext.sendPluginResult(r);
-			// return true;
 		} else {
 			PermissionHelper.requestPermissions(this, 0, permissions);
 		}
@@ -51,9 +51,11 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		if (action.equals("read")) {
 			System.out.println("APPMSG - Read in Execute");
 			this.readTags();
+		} else {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	public void readTags() {
@@ -69,45 +71,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
        		case READ_CODE :
        			System.out.println("APPMSG - onActivityResult : " + resultCode);
 
-	            /*if (resultCode == this.andContext.RESULT_OK) {
-	                JSONObject obj = new JSONObject();
-	                try {
-	                    ArrayList<String> result = intent.getStringArrayListExtra("RESULT");
-	                    JSONArray jsArray = new JSONArray(result);
-	                    // obj.put(CANCELLED, false);
-	                    obj.put("tags", jsArray);
-	                } catch (JSONException e) {
-	                    // Log.d(LOG_TAG, "This should never happen");
-	                }
-
-	                this.callbackContext.success(obj);
-	            } else if (resultCode == this.andContext.RESULT_CANCELED) {
-	                JSONObject obj = new JSONObject();
-	                try {
-	                    // obj.put(CANCELLED, true);
-	                    obj.put("tags", "");
-	                } catch (JSONException e) {
-	                    // Log.d(LOG_TAG, "This should never happen");
-	                }
-	                this.callbackContext.success(obj);
-	            } else {
-	                this.callbackContext.error("Unexpected error");
-	            }*/
 	            break;
-		    /*case RADAR_CODE :
-		    	if (resultCode == Activity.RESULT_CANCELED) {
-	                JSONObject obj = new JSONObject();
-	                try {
-	                    obj.put(CANCELLED, true);
-	                    obj.put("tags", "");
-	                } catch (JSONException e) {
-	                    Log.d(LOG_TAG, "This should never happen");
-	                }
-	                this.callbackContext.success(obj);
-	            } else {
-	                this.callbackContext.error("Unexpected error");
-	            }
-	            break;*/
 	    }
     }
 
