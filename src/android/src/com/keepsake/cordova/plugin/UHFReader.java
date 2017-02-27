@@ -79,14 +79,14 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 			case ijsRecognized:
 					System.out.println("1 APPMSG - IsRecognized");
 
-					new java.util.Timer().schedule( 
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								int res = getIvrJackService().readEPC(true);
-								System.out.println("2 APPMSG - Read: " + res);
-							}
-						}, 5000);
+					// new java.util.Timer().schedule( 
+					// 	new java.util.TimerTask() {
+					// 		@Override
+					// 		public void run() {
+					// 			int res = getIvrJackService().readEPC(true);
+					// 			System.out.println("2 APPMSG - Read: " + res);
+					// 		}
+					// 	}, 5000);
 
 					// int res = getIvrJackService().readEPC(true);
 					// System.out.println("2 APPMSG - Read: " + res);
@@ -101,8 +101,15 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
     @Override
 	public void onConnect(String var1) {
 		System.out.println("3 APPMSG - onConnect");
-		// int res = getIvrJackService().readEPC(true);
-		// System.out.println("2 APPMSG - Read: " + res);
+
+		new java.util.Timer().schedule( 
+			new java.util.TimerTask() {
+				@Override
+				public void run() {
+					int res = getIvrJackService().readEPC(true);
+					System.out.println("2 APPMSG - Read: " + res);
+				}
+			}, 10000);
 	}
 
 	@Override
