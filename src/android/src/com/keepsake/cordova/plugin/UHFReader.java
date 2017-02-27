@@ -26,17 +26,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast; 
 
+import java.util.*;
+
 import rfid.ivrjacku1.*;
 
 public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private Context andContext;
 	private IvrJackService ivrjacku1;
-	
 
 	private IvrJackService getIvrJackService(){
-		if(ivrjacku1==null)
-			ivrjacku1=new IvrJackService();
+		if(ivrjacku1 == null)
+			ivrjacku1 = new IvrJackService();
 		return ivrjacku1;
 	}
 
@@ -76,9 +77,19 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 				break;
 				
 			case ijsRecognized:
-					System.out.println("3 APPMSG - IsRecognized");
+					System.out.println("1 APPMSG - IsRecognized");
+
+					new java.util.Timer().schedule( 
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								int res = getIvrJackService().readEPC(true);
+								System.out.println("2 APPMSG - Read: " + res);
+							}
+						}, 5000);
+
 					// int res = getIvrJackService().readEPC(true);
-					// System.out.println("3 APPMSG - Read: " + res);
+					// System.out.println("2 APPMSG - Read: " + res);
 					break;
 				
 			case ijsUnRecognized:
@@ -89,9 +100,9 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
     @Override
 	public void onConnect(String var1) {
-		System.out.println("1 APPMSG - onConnect");
-		int res = getIvrJackService().readEPC(true);
-		System.out.println("2 APPMSG - Read: " + res);
+		System.out.println("3 APPMSG - onConnect");
+		// int res = getIvrJackService().readEPC(true);
+		// System.out.println("2 APPMSG - Read: " + res);
 	}
 
 	@Override
