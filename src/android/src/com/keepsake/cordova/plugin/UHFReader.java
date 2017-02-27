@@ -7,23 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast; 
-
+import android.*;
 import rfid.ivrjacku1.*;
 
 public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
