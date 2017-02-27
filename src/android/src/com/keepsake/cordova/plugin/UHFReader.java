@@ -22,7 +22,6 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	String [] permissions = { Manifest.permission.RECORD_AUDIO };
 
-	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		if (hasPermisssion()) {
@@ -31,7 +30,6 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		} else {
 			PermissionHelper.requestPermissions(this, 0, permissions);
 		}
-		// return true;
 	}
 
 	public boolean hasPermisssion() {
@@ -52,7 +50,6 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		// this.callbackContext = callbackContext;
 		this.andContext = this.cordova.getActivity().getApplicationContext(); 
 		getIvrJackService().open(andContext, this);
 
@@ -69,20 +66,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	public void readTags() {
 		System.out.println("APPMSG - Read Status Change");
-        // Intent intentRead = new Intent();
-        // intentRead.setAction(READ_INTENT);
-        // this.cordova.startActivityForResult(this, intentRead, READ_CODE);
     }
-
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    	switch(requestCode) {
-       		case READ_CODE :
-       			System.out.println("APPMSG - onActivityResult : " + resultCode);
-
-	            break;
-	    }
-    }*/	
 
 	@Override
 	public void onStatusChange(IvrJackStatus var1) {
