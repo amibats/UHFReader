@@ -28,7 +28,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		if (hasPermisssion()) {
 			PluginResult r = new PluginResult(PluginResult.Status.OK);
 			callbackContext.sendPluginResult(r);
-			return true;
+			// return true;
 		} else {
 			PermissionHelper.requestPermissions(this, 0, permissions);
 		}
