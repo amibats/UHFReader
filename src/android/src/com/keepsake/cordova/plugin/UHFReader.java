@@ -9,12 +9,15 @@ import android.content.Context;
 
 import android.*;
 import rfid.ivrjacku1.*;
+import java.util.*;
 
 public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private Context andContext;
 	private IvrJackService ivrjacku1;
 	private CallbackContext callbackContext;
+	private static final String READ_INTENT = "keepsake.intent.action.UHF_READ";
+	public static final int READ_CODE = 0;
 
 	String [] permissions = { Manifest.permission.RECORD_AUDIO };
 
@@ -38,9 +41,10 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		this.callbackContext = callbackContext;
-		
-		System.out.println("APPMSG - Execute");
 		this.andContext = this.cordova.getActivity().getApplicationContext(); 
+
+		System.out.println("APPMSG - Execute");
+		
 		getIvrJackService().open(andContext, this);
 
 		if (action.equals("read")) {
@@ -64,7 +68,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
        		case READ_CODE :
        			System.out.println("APPMSG - onActivityResult : " + resultCode);
 
-	            if (resultCode == Activity.RESULT_OK) {
+	            if (resultCode == this.andContext.RESULT_OK) {
 	                JSONObject obj = new JSONObject();
 	                try {
 	                    ArrayList<String> result = intent.getStringArrayListExtra("RESULT");
@@ -76,7 +80,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 	                }
 
 	                this.callbackContext.success(obj);
-	            } else if (resultCode == Activity.RESULT_CANCELED) {
+	            } else if (resultCode == this.andContext.RESULT_CANCELED) {
 	                JSONObject obj = new JSONObject();
 	                try {
 	                    // obj.put(CANCELLED, true);
