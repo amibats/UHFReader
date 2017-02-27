@@ -84,14 +84,8 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 					System.out.println("APPMSG - open");
 
-					new java.util.Timer().schedule( 
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								int res = getIvrJackService().readEPC(true);
-								System.out.println("APPMSG - Read: " + res);
-							}
-						}, 5000);
+					int res = getIvrJackService().readEPC(true);
+					System.out.println("APPMSG - Read: " + res);
 
 					// int res = getIvrJackService().readEPC(true);
 					// System.out.println("2 APPMSG - Read: " + res);
