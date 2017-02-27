@@ -48,11 +48,16 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 		if (action.equals("read")) {
 			System.out.println("APPMSG - Read in Execute");
-			this.readTags(args, callbackContext);
-			// return true;
+
+			System.out.println("APPMSG - IsRecognized");
+			int res = getIvrJackService().readEPC(false);
+			System.out.println("APPMSG - Read: " + res);
+					
+			// this.readTags(args, callbackContext);
+			return true;
 		} else if (action.equals("write")) {
 			System.out.println("APPMSG - Write in Execute");
-			this.writeTags(args, callbackContext);
+			// this.writeTags(args, callbackContext);
 			return true;
 		}
 
@@ -75,9 +80,9 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 				break;
 				
 			case ijsRecognized:
-					System.out.println("APPMSG - IsRecognized");
-					int res = getIvrJackService().readEPC(false);
-					System.out.println("APPMSG - Read: " + res);
+					// System.out.println("APPMSG - IsRecognized");
+					// int res = getIvrJackService().readEPC(false);
+					// System.out.println("APPMSG - Read: " + res);
 					break;
 				
 			case ijsUnRecognized:
