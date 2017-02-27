@@ -49,7 +49,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 		if (action.equals("read")) {
 			System.out.println("APPMSG - Read in Execute");
 			this.readTags(args, callbackContext);
-			return true;
+			// return true;
 		} else if (action.equals("write")) {
 			System.out.println("APPMSG - Write in Execute");
 			this.writeTags(args, callbackContext);
