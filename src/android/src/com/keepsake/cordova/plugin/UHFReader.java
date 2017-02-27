@@ -16,7 +16,7 @@ public class UHFReader extends CordovaPlugin implements IvrJackAdapter {
 
 	private Context andContext;
 	private IvrJackService ivrjacku1;
-	// private CallbackContext callbackContext;
+	private CallbackContext callbackContext;
 	// private static final String READ_INTENT = "keepsake.intent.action.READ";
 	// public static final int READ_CODE = 0;
 
